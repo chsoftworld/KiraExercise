@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span class="ai-help"></span>
+    <div id ="app">
+        <pre>
+            北国风光，千里冰封，万里雪飘。
+            望长城内外，惟余莽莽，大河上下，顿失滔滔。
+        </pre>
+    </div>
+    <div id="image">
+        <img src="../img/labixiaoxin1.png" alt="">
+    </div>
+    <div id="article">
+        <!-- <p>TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest</p>
+        <p>TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest</p> -->
+    </div>
+</body>
+<style>
+    /* text-shadow */
+    #app {
+        border: 5px solid gray;
+        text-shadow: 5px 5px 5px gray;
+        font-size: 50px;
+        font-weight: bold;
+        font-family: monospace;
+        background-color: greenyellow;
+        /* box-shadow: 5px 10px 5px gray; */
+        /* 当横纵距离都设置为0时，将在盒的四周绘制阴影 */
+        box-shadow: 0px 0px 10px 10px gray;
+        box-sizing: border-box;
+        width: 1300px;
+        /* 圆角边框绘制 */
+        /* border-radius: 20px; */
+        border-radius: 40px 20px;
+        /* border-top-left-radius: ; */
+        /* 透明度 rgba transparent opacity*/
+
+        /* CSS3动画功能 Transition Animation 可以同时平行过渡多个值 Transition只能通过设置起始效果和重点效果平行过渡，更复杂需要用Animation 关键帧*/
+       -webkit-transition : background-color 2s linear;
+       -moz-transition: background-color 2s linear;
+    }
+
+    #app:hover {
+        background-color: indianred;
+    }
+    #image img{
+          /* 变形 : 旋转 缩放 倾斜 移动 可以指定变形基准点*/
+          /* transform: rotate(45deg); */
+          /* transform-origin: left top; */
+          /* Animation */
+          animation: XiaoXinGo 5s linear infinite;
+    }
+
+    @keyframes XiaoXinGo {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    /* word-break 和 word-wrap */
+    /* Web-Font  */
+    @font-face {
+        font-family: WangXiZhi;
+        src: url('../font/王羲之书法字体.ttf');
+        font-weight: normal;
+    }
+    pre {
+        font-family: WangXiZhi;
+    }
+    #article{
+        /* column-count: 2; */
+    }
+    /* 盒布局 */
+    .box {
+        /* display: -webkit-box; 已过时 */
+        display: flexbox;
+        display: flex; 
+        display: grid;
+    }
+
+    /* 媒体查询 */
+    /* 滤镜 */
+</style>
+</html>

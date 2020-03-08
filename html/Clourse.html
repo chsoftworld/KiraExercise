@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function outter() {
+            let a = function(){
+
+            };
+            function b(){
+
+            }
+        }
+        let person = {
+            name:'zhangsan',
+            age:18
+        }
+        person = new Proxy(person, {
+            get(target,prop){
+                console.log(target)
+                console.log(prop)
+                return target.name;
+            }
+        })
+        console.log(person.name)
+    </script>
+</body>
+</html>

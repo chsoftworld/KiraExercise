@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 我们将让 work 缓存一个 slow 起来
+        let worker = {
+            someMethod() {
+                return 1;
+            },
+
+            slow(x) {
+                // 显然, 这里会有一个 CPU 重负载的任务
+                console.log("Called with " + x);
+                console.log("Called with " + this);
+                return x * this.someMethod(); // (*)
+            }
+        };
+        worker.slow(3);
+
+        function cachingDecorator(func) {
+            let cache = new Map();
+            return function (x) {
+                if (cache.has(x)) {
+                    return cache.get(x);
+                }
+                console.log("decorator this : " + this);
+                // let result = func(x); 改造前 this指向window，报错
+                let result = func.call(this, x);
+                // let result = func.call(worker,x);
+                // 等价于上一行
+                // let result = (function() {
+                //     console.log("CachingDecorator this : " + this);
+                //     return x * this.someMethod(); // (*)
+                // })();
+                cache.set(x, result);
+                return result;
+            };
+        }
+        // 35行使用this必须如下调用
+        worker.slow = cachingDecorator(worker.slow);
+        // 36行指定worker 任意情况都可以使用
+        let test = cachingDecorator(worker.slow);
+        // console.log(worker.slow(2));
+
+        // 上文中相当于闭包中执行逻辑，如果原函数使用到this，必然会造成this指向改变，可以使用call
+        // func(1, 2, 3);
+        // func.call(obj, 1, 2, 3)
+        function sayHi() {
+            console.log(this.name);
+        }
+
+        let user = { name: "John" };
+        let admin = { name: "Admin" };
+
+        // 使用 call 将不同的对象传递为 "this"  原函数.call(希望this指向的函数,原函数参数1,原函数参数2...)
+        sayHi.call(user); // this = John
+        sayHi.call(admin); // this = Admin
+
+
+        // func(1, 2, 3);
+        // func.apply(context, [1, 2, 3])
+        // call 和 apply 之间唯一的语法区别是 call 接受一个参数列表，而 apply 则接受带有一个类似数组的对象。
+        console.log(typeof this)
+        let obj = {
+            name: this,
+            age: 18
+        }
+        console.log(obj.name) // 指向window 对象中的this指向window是因为只有function作用域吗
+
+        {
+            console.log(this) // 指向this
+            let _this = this;
+            console.log(this) // 指向this
+        }
+
+        // apply的区别是会返回一个新的绑定函数而不是直接执行
+        this.a = 1;
+        var module = {
+            a: 2,
+            getA: function () {
+                return this.a;
+            }
+        };
+        module.getA();//2
+        var getA1 = module.getA;
+        // getA在外部调用，此时的this指向了全局对象
+        getA1();//1
+        // 再把getA1方法绑定到module环境上
+        var getA2 = getA1.bind(module);
+        getA2();
+    </script>
+</body>
+
+</html>

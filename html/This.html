@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // this相当于一个占位符，会在运行过程中被动态的替换成调用者,因此很多时候我们要用 _this = this保存当前this
+
+        // 1.对象中也存在this，指向Window
+        let person = {
+            name: this,
+            age: 18
+        }
+        console.log(person.name)  // window
+
+        let user = {
+            name: "John",
+            age: 30,
+            sayHi() {
+                // "this" 指的是“当前的对象”
+                alert(this.name);
+            }
+
+        };
+        user.sayHi(); // John
+        let otherUser = user.sayHi;
+        otherUser(); // ''
+    </script>
+</body>
+
+</html>

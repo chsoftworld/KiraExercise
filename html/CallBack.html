@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function liHome(callback){
+        let liStatus = 'sleep';
+        for(let i = 0; i< 100; i++){
+            console.log('query');
+        }
+        liStatus = 'wakeup';
+        callback(liStatus);
+    }
+
+    liHome(function(liStatus){
+        console.log('li status is : ' + liStatus);
+        // do something...
+    })
+</script>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 原型对象初始只有一个constructor属性，值是函数本省 {constructor:Person}
+        // 原型对象一则为了复用函数，二则为了继承？
+        // 不过使用第三方框架提供的对象比如说Vue，貌似也只能挂在prototype上才能做到全局共享，似乎也具有方便扩展的特性
+        // 换句话说prototype似乎提供了一种动态扩展对象功能的作用
+
+        let origin = {
+            work(){
+                console.log('i can work')
+            }
+        }
+        let child = {
+            swim(){
+                console.log('i can swin')
+            },
+            __proto__:origin
+        }
+        console.log(child.work())
+        let children = {}
+        function Person(name){
+            this.name = name;
+            this.eat = function(){
+                console.log("Person can eat")
+            },
+            this.children = children
+        }
+        let son = {}
+        Person.prototype.run = function(){
+            console.log("i can run")
+        }
+        Person.prototype.child = child;
+        let person1 = new Person('lisi');
+        let person2 = new Person('lisi');
+        console.log(person1.run == person2.run)
+        console.log(person1.eat == person2.eat)
+        console.log(person1.name == person2.name)
+        console.log(person1.son == person2.son)
+        console.log(person1.children == person2.children)
+        console.log(Function instanceof Object)
+        // 普通对象视乎并没有prototype属性
+        // 无论什么时候，只要创建了一个新函数，就会根据一组特定的规则为该函数创建一个 prototype
+        // 属性，这个属性指向函数的原型对象。在默认情况下，所有原型对象都会自动获得一个 constructor
+        // （构造函数）属性，这个属性包含一个指向 prototype 属性所在函数的指针。就拿前面的例子来说，
+        // Person.prototype. constructor 指向 Person。而通过这个构造函数，我们还可继续为原型对象
+        // 添加其他属性和方法。
+        // 创建了自定义的构造函数之后，其原型对象默认只会取得 constructor 属性；至于其他方法，则
+        // 都是从 Object 继承而来的
+        console.log(origin.prototype)
+        // function Zhansan(){
+        //     this.job = function(){
+        //         console.log("I am an engineer")
+        //     },
+        //     this.prototype = new Person()
+        // }
+        // let zhansan = new Zhansan();
+        // zhansan.eat();
+
+        // 让原型对象等于另一个类型的示例就实现了继承，也就是原型链的原理
+    </script>
+</body>
+</html>

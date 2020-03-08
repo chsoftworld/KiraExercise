@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let obj = {
+        name:'zhansan',
+        age:18,
+        eat:function(){
+            console.log('i like eat');
+        }
+    }
+    let obj2 = new Object();
+    obj2.name = 'lisi';
+    obj2.age = 20;
+    obj2.eat = function(){
+        console.log('i like eat too');
+    }
+
+    function Person(){}
+    Person.prototype.name = 'zhansan';
+
+    let zhangsan = new Person();
+    console.log(zhangsan.__proto__);
+    // 函数也是一种对象
+    // *****实例和对象都没有prototype属性？只有构造函数才有？
+    // *****实例和对象本质上应该是一样的，已经分配了内存空间，不再具有prototype属性，但是具有__proto__指针，指向构造函数的原型对象 f1.__proto__ === Foo.prototype
+    console.log(zhangsan.prototype);
+    console.log(zhangsan.constructor);
+    console.log(Person.__proto__);
+
+    // 1> __proto__和constructor属性是对象所独有的；② prototype属性是函数所独有的，因为函数也是一种对象，所以函数也拥有__proto__和constructor属性。
+    // 2> __proto__属性的作用就是当访问一个对象的属性时，如果该对象内部不存在这个属性，那么就会去它的__proto__属性所指向的那个对象（父对象）里找，一直找，直到__proto__属性的终点null，再往上找就相当于在null上取值，会报错。通过__proto__属性将对象连接起来的这条链路即我们所谓的原型链。
+    // 3> prototype属性的作用就是让该函数所实例化的对象们都可以找到公用的属性和方法，即f1.__proto__ === Foo.prototype。
+    // 4> constructor属性的含义就是指向该对象的构造函数，所有函数（此时看成对象了）最终的构造函数都指向Function
+    // 5> 函数的原型对象初始的时候默认只有一个constructor熟悉，指向该函数的构造函数
+    // 6> 让原型对象等于另一个类型的示例就实现了继承，也就是原型链的原理
+
+
+    // ***** prototype是构造函数有(并且构造函数也拥有__proto__：构造函数拥有一切，其余部分拥有)，也就是new之前才有的，所以函数实例和对象都没有prototype，但是有__proto__
+</script>
+</html>

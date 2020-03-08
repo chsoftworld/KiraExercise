@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="test test1"></div>
+    <div class="test"></div>
+    <div id="uniqe" title="xxx">Hello</div>
+    <div id="parent">
+        <div id="child"></div>
+    </div>
+    <div id="div1"></div>
+    <div id="div2"></div>
+    <div id="div3"></div>
+    <div id="div4"></div>
+    <div id="div5"></div>
+    <!-- div.test匹配class属性包含test的所有div元素 -->
+    <style>
+        /* p {};
+        p,h1 {};
+        * {}; */
+        /* .test{
+            height: 20px;
+            background-color: rebeccapurple;
+        }; */
+        /* div.test匹配class属性包含test的所有div元素 交集选择器*/
+        div.test{
+            height: 20px;
+            background-color: rebeccapurple;
+        }
+        .test1{
+            box-shadow: 1px saddlebrown;
+        }
+        /* 同事包含test和test1两个class才会应用其中的属性*/
+        .test.test1 {
+            width: 100px;
+        }
+        /* 包含test或test1其中一个class会应用其中的属性*/
+        .test, .test1{
+            border: thick solid blue;
+        }
+        /* class属性包含test的div元素会被命中*/
+        div[class~="test"]{
+            height: 20px;
+        }
+        div#uniqe {
+            background-color: seagreen;
+            height: 20px;
+            width: 100px;
+        }
+        /* 属性选择器 */
+        div[id]{
+            color:sienna
+        }
+        /* 同时拥有id和title*/
+        *[id][title] {
+            font-weight: bold;
+        }
+        div[title="xxx"]{
+            font-size: larger;
+        }
+        #parent {
+            background-color: burlywood;
+            width: 200px;
+            height: 200px;
+            border-top: 1px solid #ccc;
+        }
+        #child{
+            background-color: coral;
+            width: 100%;
+            height: 50%;
+            margin-top: 25%;
+            margin-bottom: 25%;
+            /*
+            问题，给子元素设置了margin-top，结果父元素下沉了，子元素没下沉。
+            父元素的第一个子元素的上边距margin-top如果碰不到有效的border或者padding.就会不断一层一层的找自己“领导”(父元素，祖先元素)的麻烦。
+            只要给领导设置个有效的 border或者padding就可以有效的管制这个目无领导的margin防止它越级，假传圣旨，把自己的margin当领导的margin执行。
+            对于垂直外边距合并的解决方案上面已经解释了，为父元素增加一个border-top或者padding-top即可解决这个问题
+            */
+            margin-top: 10px;
+        }
+        #div1,#div2,#div3{
+            width: 50px;
+            height: 50px;
+            border:1px,solid,red;
+            display: inline-block;
+            background-color: salmon;
+        }
+        #div4,#div5{
+            width: 20%;
+            height: 100px;
+            background-color: blue;
+        }
+        #div4{
+            position: relative;
+            }
+         /* 
+            div[title^="xxx"] 以xxx开头
+            div[title$="xxx"] 以xxx结尾
+            div[title*="xxx"] 包含字符串xxx
+            div[title|="xxx"] 等于xxx或者以xxx开头
+            ul li后代元素选择器，无论间隔多少层都可以选中
+            ul > li子元素选择器
+            ul + p 相邻兄弟选择器
+            a:visited 伪类选择器 就好像访问过的a元素有了一个visited类一样
+            伪类：
+            :link, :visited, :hover, :focus, :active, :first-child, :lang :last-child, 
+            :only-child, :first-of-type, :last-of-type, :only-of-type, :nth-child(n), 
+            :nth-last-child(n), :nth-of-type(n), :nth-last-of-type(n), 
+            :root, :empty, :target, :enabled, :disabled, :checked, :not(selector),
+            :read-only, :read-write 等等
+            伪元素
+            ::first-letter, ::first-line, ::before, ::after ::selection 
+            看到第三章，结构和重叠
+            样式应用的优先级取决于权重 内联 1,0,0,0 ID 0,1,0,0
+            ！important重要性声明
+            样式具有继承性
+            rgb也可以使用百分比 rgb(59%,50%,50%)
+            css2.1 px em ex
+            px屏幕上的点对应，取决于屏幕分辨率
+            em一种给定字体的fontsize值 如果一个元素的font-size为14像素，那么1em就是14px
+            ex指所用字体中小写x的高度
+            @import url(xxx.css)这种方式为什么没应用起来
+            inherit 使一个属性的值与其父元素相同，一般不用声明，因为元素默认会继承样式，有一些特殊场景可以使用
+            text-indent 文本缩进
+            text-align 对齐方式
+            line-heigth 行高
+            vertical-align
+            word-spacing
+            letter-spacing
+            text-transform
+            text-decoration
+            text-shadow
+            white-space
+            direction
+            box-sizing 指定盒模型大小？
+            margin和padding也可以设置百分比
+            元素垂直居中的办法就是将上下外边距设置为25%，因为设置为auto时会重置为0
+            替换元素例如img，给定宽度auto框的宽度就是box的宽度
+            外边距合并发生在父子元素和两个相邻元素之间如果元素有内边距和边框，那么久不会发生垂直外边距合并
+            1、防止元素与子元素margin重叠：
+            用内层元素的margin通过外层元素的padding代替；
+            内层元素透明边框 border:20px solid transparent或者父元素background-color；
+            外层元素 overflow:hidden;或者overflow:auto；
+            2、防止元素与子元素、与父元素。与相邻元素的重合：
+            设置元素绝对定位 postion:absolute;或float:left;或display:inline-block；
+            inline-block貌似也是一种很好的布局方式
+            浮动会脱离文档流，但是会影响原有布局内容
+            绝对定位和固定定位会脱离文档流
+            相对定位原有位置保留
+            margin调解整体div border与其他div组件的距离，padding调整div中内容与div边框border的距离
+         */
+    </style>
+</body>
+</html>
