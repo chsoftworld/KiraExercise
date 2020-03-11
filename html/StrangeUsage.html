@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let name = 'window';
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+            this.eat = function () {
+                console.log(this.name)
+            }
+        }
+        let zhangsan = new Person('zhangsan', 18);
+        zhangsan.eat();
+        (0, zhangsan.eat)();
+
+        // ES6动态属性名 把属性名用[]括起来可以使用提前定义的变量
+        let attrName = 'employeeNo'
+        const salary = {
+            [attrName]: 1001
+        }
+        console.log(salary[attrName])
+
+        // 对象超类
+        let parent = {
+            foo() {
+                console.log("Hello from the Parent");
+            }
+        }
+
+        let child = {
+            foo() {
+                super.foo();
+                console.log("Hello from the Child");
+            }
+        }
+        Object.setPrototypeOf(child, parent);
+        child.foo();
+
+        for (let obj in zhangsan) {
+            console.log(obj)
+        }
+        let demoArray = [1, 2, 3]
+        // for of 可以用来遍历迭代器，不能遍历对象
+        for (let obj of demoArray) {
+            console.log(obj)
+        }
+        // forEach也是用来遍历迭代器
+        demoArray.forEach((arr) => console.log(arr));
+        // map filter reduce
+    </script>
+</body>
+
+</html>
